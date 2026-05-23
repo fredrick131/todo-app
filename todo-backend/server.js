@@ -54,6 +54,9 @@ app.delete("/api/tasks/:id", async (req, res) => {
   res.json(tasks);
 });
 
-app.listen(5000, () => {
-  console.log("Server running on http://localhost:5000");
+// 🔥 FIXED PART ONLY (Render compatible)
+const PORT = process.env.PORT || 10000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
