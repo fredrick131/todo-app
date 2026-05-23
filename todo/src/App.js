@@ -5,7 +5,8 @@ function App() {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
 
-  const API = "http://localhost:5000/api/tasks";
+  // 🔥 ONLY THIS LINE CHANGED
+  const API = "https://todo-app-yrqz.onrender.com/api/tasks";
 
   // GET
   const getTasks = async () => {
