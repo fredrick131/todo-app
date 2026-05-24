@@ -6,7 +6,7 @@ function App() {
   const [tasks, setTasks] = useState([]);
 
   // 🔥 ONLY THIS LINE CHANGED
-  const API = "https://todo-app-yrqz.onrender.com/api/tasks";
+  const API = "https://todo-backend-5-8iqc.onrender.com";
 
   // GET
   const getTasks = async () => {
