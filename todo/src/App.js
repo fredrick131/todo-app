@@ -8,11 +8,15 @@ function App() {
   // BACKEND URL
   const API = "https://todo-backend-5-8iqc.onrender.com/api/tasks";
 
-  // GET
+  // GET (with error handling)
   const getTasks = async () => {
-    const res = await fetch(API);
-    const data = await res.json();
-    setTasks(data);
+    try {
+      const res = await fetch(API);
+      const data = await res.json();
+      setTasks(data);
+    } catch (err) {
+      console.log("GET error:", err);
+    }
   };
 
   useEffect(() => {
@@ -23,55 +27,70 @@ function App() {
   const addTask = async () => {
     if (!task) return;
 
-    const res = await fetch(API, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ task }),
-    });
+    try {
+      const res = await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ task }),
+      });
 
-    const data = await res.json();
-    setTasks(data);
-    setTask("");
+      const data = await res.json();
+      setTasks(data);
+      setTask("");
+    } catch (err) {
+      console.log("ADD error:", err);
+    }
   };
 
   // COMPLETE
   const completeTask = async (id) => {
-    const res = await fetch(`${API}/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: "done" }),
-    });
+    try {
+      const res = await fetch(`${API}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "done" }),
+      });
 
-    const data = await res.json();
-    setTasks(data);
+      const data = await res.json();
+      setTasks(data);
+    } catch (err) {
+      console.log("UPDATE error:", err);
+    }
   };
 
   // FAIL
   const failTask = async (id) => {
-    const res = await fetch(`${API}/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: "fail" }),
-    });
+    try {
+      const res = await fetch(`${API}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "fail" }),
+      });
 
-    const data = await res.json();
-    setTasks(data);
+      const data = await res.json();
+      setTasks(data);
+    } catch (err) {
+      console.log("FAIL error:", err);
+    }
   };
 
   // DELETE
   const deleteTask = async (id) => {
-    const res = await fetch(`${API}/${id}`, {
-      method: "DELETE",
-    });
+    try {
+      const res = await fetch(`${API}/${id}`, {
+        method: "DELETE",
+      });
 
-    const data = await res.json();
-    setTasks(data);
+      const data = await res.json();
+      setTasks(data);
+    } catch (err) {
+      console.log("DELETE error:", err);
+    }
   };
 
   return (
     <div className="app-wrapper">
 
-      {/* HEADER */}
       <div className="top-header">
         ITS FREDRICK'S FIRST PROJECT OF FULL STACK
       </div>
@@ -94,7 +113,6 @@ function App() {
           <ul>
             {tasks.map((t) => (
               <li key={t._id} className={t.status}>
-
                 <span>{t.task}</span>
 
                 <div className="actions">
@@ -102,7 +120,6 @@ function App() {
                   <button className="no" onClick={() => failTask(t._id)}>✗</button>
                   <button className="del" onClick={() => deleteTask(t._id)}>🗑</button>
                 </div>
-
               </li>
             ))}
           </ul>
